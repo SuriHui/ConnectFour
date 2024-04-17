@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=name\ color
+comment1.target=Player(java.lang.String,\ char)
+comment2.params=
+comment2.target=char\ getColor()
+comment3.params=
+comment3.target=java.lang.String\ getName()
+comment4.params=
+comment4.target=int\ getMove()
+comment5.params=
+comment5.target=java.lang.String\ toString()
+numComments=6
