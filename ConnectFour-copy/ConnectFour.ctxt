@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=ConnectFour
-comment1.params=
-comment1.target=ConnectFour()
-comment2.params=arg
-comment2.target=void\ main(java.lang.String[])
+comment1.params=arg
+comment1.target=void\ main(java.lang.String[])
+comment2.params=
+comment2.target=void\ run()
 comment3.params=
 comment3.target=void\ makeBoard()
 comment4.params=
