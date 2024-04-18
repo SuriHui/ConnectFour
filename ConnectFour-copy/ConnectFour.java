@@ -56,7 +56,12 @@ public class ConnectFour
     public String turns() {
         
     }
+    
+    //https://stackoverflow.com/questions/32770321/connect-4-check-for-a-win-algorithm 
+    public boolean isWin() {
 
+    }
+    
     //My teacher's base code
      public boolean isTie() {
         for (int row=0; row<Constants.BOARD_HEIGHT; row++) {
