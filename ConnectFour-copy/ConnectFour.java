@@ -7,6 +7,7 @@ public class ConnectFour
     private Player currentPlayer;
     static char[][] board = new char[Constants.BOARD_HEIGHT][Constants.BOARD_LENGTH];
 
+    //https://codereview.stackexchange.com/questions/100917/connect-four-game-in-java (use as reference)
     public void main(String arg[]) {
         ConnectFour eventLoop = new ConnectFour();
         eventLoop.run();
@@ -55,7 +56,7 @@ public class ConnectFour
     public String turns() {
         
     }
-    
+
     //My teacher's base code
      public boolean isTie() {
         for (int row=0; row<Constants.BOARD_HEIGHT; row++) {
