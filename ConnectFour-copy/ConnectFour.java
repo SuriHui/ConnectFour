@@ -39,7 +39,7 @@ public class ConnectFour
             }
         }
     }
-    
+
     public int getBoard(int row, int col) {
         return this.board[row][col];
     }
@@ -52,14 +52,47 @@ public class ConnectFour
             System.out.println();
         }
     }
-    
+
     //https://stackoverflow.com/questions/32770321/connect-4-check-for-a-win-algorithm 
-    public boolean isWin() {
-        
+    public int isWin(int rowNum, int colNum) {
+        int count = 0;
+        int player = board[rowNum][colNum];
+        //return 1 for win/lose is reaches, else return 0
+        //horizontal check
+        for (int i=0;i<Constants.BOARD_LENGTH;i++) {
+            if (board[rowNum][i] == player) {
+                count++;
+            } else {
+                count=0;
+            }
+            if (count >= 4) {
+                return 1;
+            }
+        }
+        //vertical check
+        for (int i=0; i < Constants.BOARD_HEIGHT; i++) {
+            if (board[i][colNum] == player) {
+                count++;
+            } else {
+               count = 0; 
+            }
+            if (count >= 4) { 
+                return 1;
+            }
+        }
+        // diagonal check
+        for (int i = colNum + 1, j = rowNum + 1; i < Constants.BOARD_HEIGHT && j < Constants.BOARD_LENGTH; i++, j++) {
+            if (board[i][j] != player) {
+                count = 1;
+                break;
+            }
+            count ++;
+        }
+        for (int 
     }
-    
+
     //My teacher's base code
-     public boolean isTie() {
+    public boolean isTie() {
         for (int row=0; row<Constants.BOARD_HEIGHT; row++) {
             for (int col=0; col<Constants.BOARD_LENGTH; col++) {
                 if (getBoard(row,col) == Constants.EMPTY) {
@@ -69,18 +102,18 @@ public class ConnectFour
         }
         return true;
     } 
-    
+
     //teacher's code base
     public boolean isLegalMove(int row, int col) {
         if (1 <= col && col <= Constants.BOARD_LENGTH &&
-            getBoard(row-1, col- 1) == Constants.EMPTY) {
+        getBoard(row-1, col- 1) == Constants.EMPTY) {
             return true;
         } else {
             System.out.println("Invalid column");
             return false;
         } 
     }
-    
+
     //teachers base code
     public String getROrY(int whoseMove) {
         if (whoseMove == -1) {
@@ -91,7 +124,7 @@ public class ConnectFour
             return " ";
         }
     }
-    
+
     //teachers base code
     public int getMoveCol (int whoseMove) {
         int col = 0;
@@ -114,5 +147,4 @@ public class ConnectFour
             }
         }   
     }
-    
 }
