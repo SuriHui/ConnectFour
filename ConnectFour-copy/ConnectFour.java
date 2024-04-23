@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.lang.String;
+
 public class ConnectFour
 {
     static Scanner scr = new Scanner(System.in);
@@ -16,20 +18,28 @@ public class ConnectFour
     public void run() {
         makeBoard();
         System.out.println("Welcome to Connect Four!");
+        int nextGame;
         boolean shouldContinue = true;
         while (shouldContinue == true) {
-            System.out.println("Who is PLayer 1?");
+            System.out.println("Player 1: Who is PLayer 1?");
             String p1 = scr.next();
             Player player1 = new Player(p1, Constants.P1_COLOR);
             System.out.println("Player 1: " + player1.toString());
-            System.out.println("\nPlayer 2?");
+            System.out.println("\nPlayer 2: Who is Player 2?");
             String p2 = scr.next();
             Player player2 = new Player(p2, Constants.P2_COLOR);
             System.out.println("Player 2: " + player2.toString());
-            System.out.println("Select 1-6 to choose what column you want");
+            System.out.println("\nSelect 1-6 to choose what column you want");
             printBoard();
+            
+            
+            System.out.println("\nEnter 0 to end the game");
+            nextGame = scr.nextInt();
+            if (nextGame == 0 ) {
+                shouldContinue  = false;
+            }
         }
-        System.out.println("\nThank you for playing Connect Four!");
+        System.out.println("Thank you for playing Connect Four!");
     }
 
     public static void makeBoard() {
@@ -88,8 +98,19 @@ public class ConnectFour
             }
             count ++;
         }
-        for (int 
-    }
+        
+        for (int i = colNum + 1, j=rowNum - 1; i < Constants.BOARD_HEIGHT && j > 0;i++,j++) {
+            if (board[j][i] != player) {
+                count =1;
+                break;
+            }
+            count++;
+        }
+        if (count >= 4) 
+            return 1;
+            
+        return 0;
+        }
 
     //My teacher's base code
     public boolean isTie() {
@@ -115,7 +136,7 @@ public class ConnectFour
     }
 
     //teachers base code
-    public String getROrY(int whoseMove) {
+    public String getTurn(int whoseMove) {
         if (whoseMove == -1) {
             return "R";
         } else if (whoseMove == 1) {
@@ -129,7 +150,7 @@ public class ConnectFour
     public int getMoveCol (int whoseMove) {
         int col = 0;
         while (true) {
-            System.out.printf(getROrY(whoseMove));
+            System.out.printf(getTurn(whoseMove));
             try {
                 col= scr.nextInt();
                 if (col < 1 || col > Constants.BOARD_LENGTH) {
