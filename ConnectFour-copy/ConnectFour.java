@@ -8,7 +8,7 @@ public class ConnectFour
     private Player player2;
     private Player currentPlayer;
     static char[][] board = new char[Constants.BOARD_HEIGHT][Constants.BOARD_LENGTH];
-
+    
     public static void main(String[] args) {
         System.out.println("Welcome to Connect Four!");
         System.out.println("Please enter your names: ");
@@ -32,6 +32,7 @@ public class ConnectFour
 
     public void run() {
         boolean shouldContinue = true;
+        this.currentPlayer = player1;
         while (shouldContinue == true) {
             printBoard();
             System.out.println("\nSelect 0-6 to choose what column you want");
@@ -159,17 +160,18 @@ public class ConnectFour
     }
 
     public boolean printMove(int col) {
+        //if legalmove
         if (col < 0 || col >= Constants.BOARD_LENGTH || board[0][col] != Constants.EMPTY) {
                 System.out.println("Please choose a valid move");
                 return false;
-            }
+        }
         for (int row = Constants.BOARD_HEIGHT-1; row >= 0; row--) {
             if (board[row][col] == Constants.EMPTY) {
                 board[row][col] = currentPlayer.getColor();
+                printBoard();
                 return true;
             }
         }
         return false;
     }
 }
-
