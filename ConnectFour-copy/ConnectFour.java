@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
-
 public class ConnectFour
 {
     static Scanner scr = new Scanner(System.in);
@@ -8,7 +7,7 @@ public class ConnectFour
     private Player player2;
     private Player currentPlayer;
     static char[][] board = new char[Constants.BOARD_HEIGHT][Constants.BOARD_LENGTH];
-    
+
     public static void main(String[] args) {
         System.out.println("Welcome to Connect Four!");
         System.out.println("Please enter your names: ");
@@ -22,7 +21,7 @@ public class ConnectFour
         ConnectFour eventLoop = new ConnectFour(player1, player2);
         eventLoop.run();
     }
-    
+
     public ConnectFour(Player player1, Player player2) {
         makeBoard();
         this.player2 = player2;
@@ -32,25 +31,24 @@ public class ConnectFour
 
     public void run() {
         boolean shouldContinue = true;
-        this.currentPlayer = player1;
-        while (shouldContinue == true) {
+        System.out.println(player1.toString() + " and " + player2.toString() + " are playing together!");
+        while (shouldContinue) {
             printBoard();
-            System.out.println("\nSelect 0-6 to choose what column you want");
+            System.out.println(currentPlayer.toString() + " Please select a column through 1-7");
             if (printMove(currentPlayer.getMove())) {
-                if (isWin()) {
+                if (checkHorizontalVertical() || checkDiagonal()) {
                     printBoard();
-                    System.out.println("Player " + currentPlayer.toString() + " wins!");
+                    System.out.println("Player " + currentPlayer.toString() + " wins! Yippe!");
                     shouldContinue = false;
-                } else if (isTie()) {
+                } else if (isTie(board)) {
                     printBoard();
-                    System.out.println("It's a tie!");
+                    System.out.println("Oh...It's a tie!");
                     shouldContinue = false;
                 } else {
-                    switchPlayer();   
+                    player1Turn();   
                 }
             }
         }
-        System.out.println("Thank you for playing Connect Four!");
     }
 
     public static void makeBoard() {
@@ -70,39 +68,69 @@ public class ConnectFour
         }
         System.out.println();
     }
+    
+    public void player1Turn() {
+        if (currentPlayer == player1) {
+            currentPlayer = player2;
+        } else {
+            currentPlayer = player1;
+        }
+    }
 
-    //https://stackoverflow.com/questions/32770321/connect-4-check-for-a-win-algorithm 
-    public boolean isWin() {
-        int count = 0;
-        //horizontal check
-        for (int row = 0; row < Constants.BOARD_HEIGHT-1; row++) {
-            for (int col=0;col<Constants.BOARD_LENGTH-1;col++) {
-                if (board[row][col] == currentPlayer.getMove()) {
-                    count++;
+    public boolean printMove(int col) {
+        //if legalmove
+        if (col < 0 || col >= Constants.BOARD_LENGTH || board[0][col] != Constants.EMPTY) {
+            System.out.println("Please choose a valid column");
+            return false;
+        }
+
+        for (int row = Constants.BOARD_HEIGHT-1; row >= 0; row--) {
+            if (board[row][col] == Constants.EMPTY) {
+                board[row][col] = currentPlayer.getColor();
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    //friend's code base
+    public boolean checkHorizontalVertical(){
+        int hCounter = 0;
+        int vCounter = 0;
+        //goes through board vertically
+        for (int col = 0; col < Constants.BOARD_LENGTH - 1; col++) {
+            for (int row = 0; row <= Constants.BOARD_HEIGHT - 1; row++) {
+                if (board[row][col] == currentPlayer.getColor()){
+                    vCounter++;
                 } else {
-                    count = 0;
+                    vCounter = 0;
                 }
-                if (count >= 4) {
+                
+                if (vCounter == 4) {
                     return true;
                 }
             }
         }
 
-        //vertical check
-        for (int row = 0; row < Constants.BOARD_HEIGHT-1; row++) {
-            for (int col =0; col < Constants.BOARD_LENGTH-1; col++) {
-                if (board[row][col] == currentPlayer.getMove()) {
-                    count++;
-                } else {
-                    count = 0; 
+        for(int row = Constants.BOARD_HEIGHT-1; row >= 0; row --){
+            for(int col = 0; col < Constants.BOARD_LENGTH-1; col ++){
+                if(board[row][col] == currentPlayer.getColor()){ 
+                    hCounter++;
+                }else{
+                    hCounter = 0;
                 }
-                if (count >= 4) { 
+
+                if(hCounter == 4){
                     return true;
                 }
             }
         }
-        
-        // diagonal check
+        return false;
+    }
+    
+    //friend's code base
+    public boolean checkDiagonal() {
+        //Checks diagonal from bottom left to Top Right
         for (int row = Constants.BOARD_HEIGHT - 1; row >= 3; row--) {
             for (int col = 0; col <= Constants.BOARD_LENGTH - 4; col++) {
                 if (board[row][col] == currentPlayer.getColor() &&
@@ -116,7 +144,7 @@ public class ConnectFour
 
         // Check diagonal from top left to bottom right
         for (int row = 0; row <= Constants.BOARD_HEIGHT - 4; row++) {
-            for (int col = 0; col <= Constants.BOARD_LENGTH- 4; col++) {
+            for (int col = 0; col <= Constants.BOARD_LENGTH - 4; col++) {
                 if (board[row][col] == currentPlayer.getColor() &&
                 board[row + 1][col + 1] == currentPlayer.getColor() &&
                 board[row + 2][col + 2] == currentPlayer.getColor() &&
@@ -125,13 +153,12 @@ public class ConnectFour
                 }
             }
         }
-        if (count >= 4) 
-            return true;   
+
         return false;
     }
 
     //My teacher's base code
-    public boolean isTie() {
+    public boolean isTie(char[][] board) {
         for (int row=0; row<Constants.BOARD_HEIGHT; row++) {
             for (int col=0; col<Constants.BOARD_LENGTH; col++) {
                 if (board[row][col] == Constants.EMPTY) {
@@ -141,37 +168,4 @@ public class ConnectFour
         }
         return true;
     } 
-
-    public void switchPlayer() {
-        if (currentPlayer == player1) {
-            currentPlayer = player2;
-        } else {
-            currentPlayer = player1;
-        }
-    }
-
-    public void getTurn() {
-        if (currentPlayer == player1) {
-            System.out.println(player1.toString()+ "'s turn");
-        } else if (currentPlayer == player2) {
-            System.out.println(player2.toString() + "'s turn");
-        }
-        System.out.println();
-    }
-
-    public boolean printMove(int col) {
-        //if legalmove
-        if (col < 0 || col >= Constants.BOARD_LENGTH || board[0][col] != Constants.EMPTY) {
-                System.out.println("Please choose a valid move");
-                return false;
-        }
-        for (int row = Constants.BOARD_HEIGHT-1; row >= 0; row--) {
-            if (board[row][col] == Constants.EMPTY) {
-                board[row][col] = currentPlayer.getColor();
-                printBoard();
-                return true;
-            }
-        }
-        return false;
-    }
 }
