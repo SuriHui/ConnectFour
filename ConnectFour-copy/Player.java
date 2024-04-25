@@ -1,4 +1,5 @@
 import java.util.Scanner;
+//friend's code base
 public class Player
 {
     Scanner input = new Scanner(System.in);
