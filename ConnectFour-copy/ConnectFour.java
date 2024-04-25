@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.InputMismatchException;
 public class ConnectFour
 {
     static Scanner scr = new Scanner(System.in);
@@ -97,7 +96,6 @@ public class ConnectFour
     public boolean checkHorizontalVertical(){
         int hCounter = 0;
         int vCounter = 0;
-        //goes through board vertically
         for (int col = 0; col < Constants.BOARD_LENGTH - 1; col++) {
             for (int row = 0; row <= Constants.BOARD_HEIGHT - 1; row++) {
                 if (board[row][col] == currentPlayer.getColor()){
@@ -114,9 +112,9 @@ public class ConnectFour
 
         for(int row = Constants.BOARD_HEIGHT-1; row >= 0; row --){
             for(int col = 0; col < Constants.BOARD_LENGTH-1; col ++){
-                if(board[row][col] == currentPlayer.getColor()){ 
+                if (board[row][col] == currentPlayer.getColor()){ 
                     hCounter++;
-                }else{
+                } else {
                     hCounter = 0;
                 }
 
@@ -153,7 +151,6 @@ public class ConnectFour
                 }
             }
         }
-
         return false;
     }
 

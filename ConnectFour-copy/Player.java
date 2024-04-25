@@ -1,5 +1,4 @@
 import java.util.Scanner;
-//friend's code base
 public class Player
 {
     Scanner input = new Scanner(System.in);
@@ -20,10 +19,10 @@ public class Player
     }
 
     public int getMove() {
-        int col = input.nextInt(); 
+        int col = input.nextInt() - 1; 
         return col;
     }
-
+    //friend's code
     public String toString() {
         if (this.color == Constants.P1_COLOR) {
             return this.getName() + " (Yellow)";
