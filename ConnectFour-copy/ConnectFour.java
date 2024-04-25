@@ -77,7 +77,6 @@ public class ConnectFour
     }
 
     public boolean printMove(int col) {
-        //if legalmove
         if (col < 0 || col >= Constants.BOARD_LENGTH || board[0][col] != Constants.EMPTY) {
             System.out.println("Please choose a valid column");
             return false;
