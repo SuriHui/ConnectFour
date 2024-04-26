@@ -127,7 +127,6 @@ public class ConnectFour
     
     //friend's code base
     public boolean checkDiagonal() {
-        //Checks diagonal from bottom left to Top Right
         for (int row = Constants.BOARD_HEIGHT - 1; row >= 3; row--) {
             for (int col = 0; col <= Constants.BOARD_LENGTH - 4; col++) {
                 if (board[row][col] == currentPlayer.getColor() &&
@@ -139,7 +138,6 @@ public class ConnectFour
             }
         }
 
-        // Check diagonal from top left to bottom right
         for (int row = 0; row <= Constants.BOARD_HEIGHT - 4; row++) {
             for (int col = 0; col <= Constants.BOARD_LENGTH - 4; col++) {
                 if (board[row][col] == currentPlayer.getColor() &&

@@ -1,13 +1,10 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
-
 public class Player
 {
     Scanner move = new Scanner(System.in);
     private String name;
     private char color;
-    
-    static char[][] board = new char[Constants.BOARD_HEIGHT][Constants.BOARD_LENGTH];
     
     public Player(String name, char color) {
         this.name = name;
